@@ -1,5 +1,7 @@
 # Gorilla.io API client for Ruby
 
+[![Build Status](https://travis-ci.org/thinkmechanic/gorilla-ruby.svg)](https://travis-ci.org/thinkmechanic/gorilla-ruby)
+
 A Ruby wrapper for the [Gorilla.io](http://gorilla.io) API.
 
 * [Gorilla.io API Docs](http://docs.gorilla.io/)
