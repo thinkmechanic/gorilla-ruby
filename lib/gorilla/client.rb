@@ -1,13 +1,21 @@
 module Gorilla
   class Client
+
+    def initialize(opts={})
+      @opts = {
+        key: config.api_key,
+        secret: config.api_secret
+      }.merge(opts)
+    end
+
     def connection
       @connection ||= Faraday.new(config.api_url) do |conn|
         conn.request :user_agent
         conn.request :api_version, config.api_version
         conn.request :json
         conn.request :signature_auth, {
-          key: config.api_key,
-          secret: config.api_secret,
+          key: @opts[:key],
+          secret: @opts[:secret],
           token_duration: config.token_duration
         }
 
