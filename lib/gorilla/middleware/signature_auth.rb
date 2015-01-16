@@ -33,7 +33,6 @@ module Gorilla
       def build_token(env)
         JWT.encode({
           exp: Time.now.utc.to_i + @opts[:token_duration].to_i,
-          iss: @opts[:key],
           method: env[:method].to_s.upcase,
           path: env[:url].path.split('?').first
         }, @opts[:secret], SIGNATURE_ALGO)
