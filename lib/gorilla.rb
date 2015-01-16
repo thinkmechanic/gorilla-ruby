@@ -18,6 +18,8 @@ module Gorilla
   configurable :token_duration
 
   configuration_defaults do |c|
+    c.api_key = nil
+    c.api_secret = nil
     c.api_version = 1
     c.api_url = 'https://api.gorilla.io/'
     c.token_duration = 5 * 60
