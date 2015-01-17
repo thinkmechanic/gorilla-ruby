@@ -37,7 +37,7 @@ Options | Default | Description
 #### Configuring Clients
 
 You can configure all clients globally, or you can configure any `api` option
-option from above on a per-client basis:
+from above on a per-client basis:
 
 ```ruby
 Gorilla.configure do |c|
@@ -57,9 +57,8 @@ client = Gorilla::Client.new({
 
 You can also customize the Faraday middleware stack by passing a block to the
 client that will be passed a `Faraday::Connection` and a hash of the current
-`api` options. In fact, [`Gorilla::Client`](blob/master/lib/gorilla/client.rb)
-is just a [`Gorilla::VanillaClient`](blob/master/lib/gorilla/vanilla_client.rb)
-that does just that.
+`api` options. In fact, [`Gorilla::Client`](lib/gorilla/client.rb) is just a
+[`Gorilla::VanillaClient`](lib/gorilla/vanilla_client.rb) that does just that.
 
 ```ruby
 gorilla_client = Gorilla::VanillaClient.new do |conn, options|
