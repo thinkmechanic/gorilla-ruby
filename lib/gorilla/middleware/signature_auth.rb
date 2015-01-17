@@ -10,9 +10,7 @@ module Gorilla
           raise ArgumentError, "#{key.inspect} is required" if !opts[key]
         end
 
-        unless opts[:token_duration]
-          opts[:token_duration] = 5 * 60
-        end
+        opts[:token_duration] ||= 5 * 60
 
         super(app)
         @opts = opts

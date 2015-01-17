@@ -3,26 +3,39 @@ require 'faraday_middleware'
 require 'configurations'
 require 'jwt'
 
+require 'gorilla/version'
+
 require 'gorilla/error'
 require 'gorilla/middleware/api_version'
 require 'gorilla/middleware/user_agent'
 require 'gorilla/middleware/signature_auth'
 require 'gorilla/middleware/http_exceptions'
+
+require 'gorilla/vanilla_client'
 require 'gorilla/client'
-require 'gorilla/version'
 
 module Gorilla
   include Configurations
 
-  configurable :api_version, :api_url, :api_key, :api_secret
-  configurable :token_duration
+  configurable api: %i{url version key secret token_duration}
+  configurable :user_agent
+  configurable :client_adapter
 
   configuration_defaults do |c|
-    c.api_key = nil
-    c.api_secret = nil
-    c.api_version = 1
-    c.api_url = 'https://api.gorilla.io/'
-    c.token_duration = 5 * 60
+    c.api.url = 'https://api.gorilla.io/'
+    c.api.version = 1
+    c.api.key = ENV['GORILLA_API_KEY']
+    c.api.secret = ENV['GORILLA_API_SECRET']
+    c.api.token_duration = 5 * 60
+
+    c.user_agent = "Gorilla Client/#{VERSION}"
+    c.client_adapter = Faraday.default_adapter
+  end
+
+  def self.testing!
+    stub = Faraday::Adapter::Test::Stubs.new
+    configuration.client_adapter = stub
+    stub
   end
 
   Faraday::Request.register_middleware \

@@ -24,19 +24,48 @@ Or install it yourself as:
 
 ## Configuration
 
+Options | Default | Description
+--------|---------|-------------
+`api.url` | `https://api.gorilla.io` | The Gorilla API url (probably won't change this).
+`api.version` | `1` | The desired Gorilla API version.
+`api.key` | `ENV['GORILLA_API_KEY']` | Your Gorilla API key.
+`api.secret` | `ENV['GORILLA_API_SECRET']` | Your Gorilla API secret.
+`api.token_duration` | `300` (5 minutes) | Amount in seconds generated signatures are good for.
+`user_agent` | `Gorilla Ruby Client/{version}` | The user agent for the client.
+`client_adapter` | `Faraday.default_adapter` | Enables easily changing the adapter in a test enviornment.
+
+#### Configuring Clients
+
+You can configure all clients globally, or you can configure any `api` option
+option from above on a per-client basis:
+
 ```ruby
 Gorilla.configure do |c|
-  # Optional (with defaults)
-  c.token_duration = 5 * 60 # Tokens expire in 5 minutes
-  c.api_version = 1
-  c.api_url = 'https://api.gorilla.io/'
-
-  # Required
-  c.api_key = 'your-api-key'
-  c.api_secret = 'your-api-secret'
+  c.api.key 'your-key'
+  c.api.secret 'your-secret'
 end
 
+# Uses the global config
 client = Gorilla::Client.new
+
+# Uses the global config, overrides key & secret
+client = Gorilla::Client.new({
+  key: 'other-key',
+  secret: 'other-secret'
+})
+```
+
+You can also customize the Faraday middleware stack by passing a block to the
+client that will be passed a `Faraday::Connection` and a hash of the current
+`api` options. In fact, [`Gorilla::Client`](blob/master/lib/gorilla/client.rb)
+is just a [`Gorilla::VanillaClient`](blob/master/lib/gorilla/vanilla_client.rb)
+that does just that.
+
+```ruby
+gorilla_client = Gorilla::VanillaClient.new do |conn, options|
+  conn.request :api_version, options[:version]
+  conn.request :signature_auth, options
+end
 ```
 
 ## Contributing

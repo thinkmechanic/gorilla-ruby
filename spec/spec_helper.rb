@@ -27,6 +27,12 @@ RSpec.configure do |config|
   config.alias_example_group_to :describe_request_middleware, type: :request
   config.alias_example_group_to :describe_response_middleware, type: :response
 
+  # Reset API Key configuration
+  Gorilla.configure do |c|
+    c.api.key = 'api-key'
+    c.api.secret = 'api-secret'
+  end
+
   config.include FaradayHelpers
   config.include RequestMiddlewareContext, type: :request
   config.include ResponseMiddlewareContext, type: :response

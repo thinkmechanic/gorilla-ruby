@@ -10,7 +10,7 @@ RSpec.describe_response_middleware Gorilla::Middleware::HttpExceptions do
     500 => Gorilla::ServerError,
     503 => Gorilla::ServerError
   }.each do |status, error|
-    it "raises an #{error.name} for HTTP status code #{status}" do
+    it "raises a #{error.name} for HTTP status code #{status}" do
       expect { process(nil, status) }.to raise_error(error)
     end
   end
