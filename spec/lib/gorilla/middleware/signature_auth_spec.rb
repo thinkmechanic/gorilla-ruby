@@ -17,7 +17,6 @@ RSpec.describe_request_middleware Gorilla::Middleware::SignatureAuth do
   let(:token) do
     JWT.encode({
       exp: test_time.utc.to_i + token_duration.to_i,
-      iss: api_key,
       method: 'GET',
       path: '/forms'
     }, api_secret, 'HS256')
