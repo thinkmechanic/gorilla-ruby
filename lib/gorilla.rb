@@ -5,6 +5,8 @@ require 'jwt'
 
 require 'gorilla/version'
 
+require 'gorilla/response'
+
 require 'gorilla/error'
 require 'gorilla/middleware/api_version'
 require 'gorilla/middleware/user_agent'

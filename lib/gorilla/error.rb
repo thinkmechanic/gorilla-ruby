@@ -2,7 +2,7 @@ module Gorilla
   # Top-level error for rescuing all Gorilla Client errors
   class Error < StandardError
     def initialize(response)
-      @response = response
+      @response = Gorilla::Response.new(response)
     end
   end
 
