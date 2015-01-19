@@ -33,9 +33,9 @@ module Gorilla
   end
 
   def self.testing!
-    stub = Faraday::Adapter::Test::Stubs.new
-    configuration.client_adapter = stub
-    stub
+    configure do |c|
+      c.client_adapter = Faraday::Adapter::Test::Stubs.new
+    end
   end
 
   Faraday::Request.register_middleware \
