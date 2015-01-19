@@ -11,7 +11,7 @@ module Gorilla
         conn.request :json
         yield(conn, options) if block_given?
         conn.response :json, content_type: /\bjson$/
-        conn.adapter config.client_adapter
+        conn.adapter *config.client_adapter
       end
     end
 

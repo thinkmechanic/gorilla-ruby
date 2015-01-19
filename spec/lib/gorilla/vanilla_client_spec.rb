@@ -41,7 +41,7 @@ RSpec.describe Gorilla::VanillaClient do
         [:request, :user_agent, Gorilla.configuration.user_agent],
         [:request, :json],
         [:response, :json, content_type: /\bjson$/],
-        [:adapter, Gorilla.configuration.client_adapter]
+        [:adapter, *Gorilla.configuration.client_adapter].flatten
 
       Gorilla::VanillaClient.new
     end

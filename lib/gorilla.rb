@@ -21,7 +21,9 @@ module Gorilla
 
   configurable api: %i{url version key secret token_duration}
   configurable :user_agent
-  configurable :client_adapter
+  configurable :client_adapter do |value|
+    value.is_a?(Array) ? value : [value]
+  end
 
   configuration_defaults do |c|
     c.api.url = 'https://api.gorilla.io/'
@@ -36,7 +38,8 @@ module Gorilla
 
   def self.testing!
     configure do |c|
-      c.client_adapter = Faraday::Adapter::Test::Stubs.new
+      stubs = Faraday::Adapter::Test::Stubs.new
+      c.client_adapter = [:test, stubs]
     end
   end
 
