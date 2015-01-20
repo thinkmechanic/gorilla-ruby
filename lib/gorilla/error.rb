@@ -1,6 +1,8 @@
 module Gorilla
   # Top-level error for rescuing all Gorilla Client errors
   class Error < StandardError
+    attr_reader :response
+
     def initialize(response)
       @response = Gorilla::Response.new(response)
     end

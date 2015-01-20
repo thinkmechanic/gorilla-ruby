@@ -41,6 +41,8 @@ module Gorilla
       stubs = Faraday::Adapter::Test::Stubs.new
       c.client_adapter = [:test, stubs]
     end
+
+    stubs
   end
 
   Faraday::Request.register_middleware \

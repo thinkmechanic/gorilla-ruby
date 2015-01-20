@@ -16,27 +16,30 @@ module Gorilla
     end
 
     def get(path, params={})
-      response = connection.get(path, params)
-      Response.new(response)
+      request(:get, path, params)
     end
 
     def post(path, params={})
-      response = connection.post(path, params)
-      Response.new(response)
+      request(:post, path, params)
     end
 
     def put(path, params={})
-      response = connection.put(path, params)
-      Response.new(response)
+      request(:put, path, params)
     end
 
     def delete(path, params={})
-      response = connection.delete(path, params)
-      Response.new(response)
+      request(:delete, path, params)
     end
 
     def config
       Gorilla.configuration
+    end
+
+    private
+
+    def request(method, path, params={})
+      response = connection.send(method, path, params)
+      Response.new(response)
     end
   end
 end
