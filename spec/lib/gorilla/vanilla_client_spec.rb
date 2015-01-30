@@ -39,7 +39,7 @@ RSpec.describe Gorilla::VanillaClient do
 
       expect_stack conn_stub,
         [:request, :user_agent, Gorilla.configuration.user_agent],
-        [:request, :json],
+        [:request, :url_encoded],
         [:response, :json, content_type: /\bjson$/],
         [:adapter, *Gorilla.configuration.client_adapter].flatten
 

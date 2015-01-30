@@ -8,7 +8,7 @@ module Gorilla
 
       @connection = Faraday.new(options[:url]) do |conn|
         conn.request :user_agent, config.user_agent
-        conn.request :json
+        conn.request :url_encoded
         yield(conn, options) if block_given?
         conn.response :json, content_type: /\bjson$/
         conn.adapter *config.client_adapter
