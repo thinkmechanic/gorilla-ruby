@@ -17,8 +17,8 @@ RSpec.describe_response_middleware Gorilla::Middleware::HttpExceptions do
 
   it 'raises a Gorilla::Error with the correct message from a Hash' do
     expect {
-      process({'error' => {'code' => 'code', 'message' => 'message'}}, 400)
-    }.to raise_error(Gorilla::Error, '400: code - message')
+      process({'error' => {'type' => 'code'}}, 400)
+    }.to raise_error(Gorilla::Error, '400: code')
   end
 
   it 'raises a Gorilla::Error with the correct message from a String' do

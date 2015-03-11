@@ -22,14 +22,14 @@ module Gorilla
       private
 
       def raise_error(klass, response)
-        msg = if response[:body].kind_of?(Hash)
-          error = response[:body]['error']
-          error['code'] + ' - ' + error['message']
+        msg = if response[:body].kind_of?(Hash) && response[:body]['error']
+          response[:body]['error']['type']
         else
           response[:body]
         end
 
-        raise klass.new(response), [response[:status], msg].compact.join(': ')
+        error_message = [response[:status], msg].compact.join(': ')
+        raise klass.new(response), error_message
       end
     end
   end
