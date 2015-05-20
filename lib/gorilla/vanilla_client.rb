@@ -7,6 +7,7 @@ module Gorilla
       options = config.api.to_h.merge(opts)
 
       @connection = Faraday.new(options[:url]) do |conn|
+        conn.request :multipart
         conn.request :user_agent, config.user_agent
         conn.request :url_encoded
         yield(conn, options) if block_given?

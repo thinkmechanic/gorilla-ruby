@@ -38,6 +38,7 @@ RSpec.describe Gorilla::VanillaClient do
       expect(Faraday).to receive(:new).and_yield(conn_stub)
 
       expect_stack conn_stub,
+        [:request, :multipart],
         [:request, :user_agent, Gorilla.configuration.user_agent],
         [:request, :url_encoded],
         [:response, :json, content_type: /\bjson$/],
